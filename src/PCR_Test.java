@@ -1,8 +1,6 @@
-import structures.TT_Tree.TT_Data;
-
 import java.time.LocalDateTime;
 
-public class PCR_Test extends TT_Data {
+public class PCR_Test implements Comparable<PCR_Test> {
     private LocalDateTime testTime;
     private String personId;
     private int testId;
@@ -23,10 +21,11 @@ public class PCR_Test extends TT_Data {
         this.note = note;
     }
 
-    public int compare(PCR_Test test) {
+    @Override
+    public int compareTo(PCR_Test test) {
         if (this.testId > test.testId) {
             return 1;
-        } else if (this.testId > testId) {
+        } else if (this.testId < test.testId) {
             return -1;
         } else {
             return 0;

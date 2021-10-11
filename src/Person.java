@@ -1,8 +1,6 @@
-import structures.TT_Tree.TT_Data;
-
 import java.time.LocalDate;
 
-public class Person extends TT_Data {
+public class Person implements Comparable<Person> {
     private String name;
     private String lastName;
     private LocalDate birthDate;
@@ -15,7 +13,8 @@ public class Person extends TT_Data {
         this.personId = personId;
     }
 
-    public int compare(Person person) {
+    @Override
+    public int compareTo(Person person) {
         if (this.name.compareTo(person.name) > 0) {
             return 1;
         } else if (this.name.compareTo(person.name) < 0) {
