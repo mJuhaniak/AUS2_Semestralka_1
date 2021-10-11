@@ -12,7 +12,8 @@ public class Main {
 
         TT_Tree<Person> tree = new TT_Tree<>();
         tree.insert(person);
-        if (tree.find(person)) {
+        tree.insert(person2);
+        if (tree.find(person2)) {
             System.out.println("t");
         } else {
             System.out.println("F");
@@ -22,7 +23,7 @@ public class Main {
         String b = "b";
         TT_Tree<String> t = new TT_Tree<>();
         t.insert(a);
-        if (t.find(b)) {
+        if (t.find(a)) {
             System.out.println("t");
         } else {
             System.out.println("F");
