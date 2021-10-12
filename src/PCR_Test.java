@@ -10,15 +10,8 @@ public class PCR_Test implements Comparable<PCR_Test> {
     private boolean testResult;
     private String note;
 
-    public PCR_Test(LocalDateTime testTime, String personId, int testId, int stationId, int districtId, int regionId, boolean testResult, String note) {
-        this.testTime = testTime;
-        this.personId = personId;
+    public PCR_Test(int testId) {
         this.testId = testId;
-        this.stationId = stationId;
-        this.districtId = districtId;
-        this.regionId = regionId;
-        this.testResult = testResult;
-        this.note = note;
     }
 
     @Override

@@ -15,7 +15,13 @@ public class TT_TreeNode <T extends Comparable<T>> {
         this.data.add(null);
         this.data.add(null);
         this.parent = null;
+        this.leftSon = null;
+        this.rightSon = null;
         nElements = 0;
+    }
+
+    public boolean hasParent() {
+        return this.parent != null;
     }
 
     public T getData(int n) {
