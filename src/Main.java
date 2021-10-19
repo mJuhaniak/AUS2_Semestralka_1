@@ -21,6 +21,7 @@ public class Main {
         PCR_Test test8 = new PCR_Test(8);
         PCR_Test test9 = new PCR_Test(9);
         PCR_Test test10 = new PCR_Test(10);
+        PCR_Test test11 = new PCR_Test(11);
 
         /*TT_Tree<Person> tree = new TT_Tree<>();
         tree.insert(person);
@@ -43,7 +44,9 @@ public class Main {
         t.insert(test8);
         t.insert(test9);
         t.insert(test10);
-        if (t.find(test5)) {
+        t.insert(test11);
+        t.delete(test7);
+        if (t.find(test7) != null) {
             System.out.println("t");
         } else {
             System.out.println("F");

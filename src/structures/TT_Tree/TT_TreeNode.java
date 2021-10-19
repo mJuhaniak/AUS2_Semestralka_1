@@ -7,7 +7,7 @@ public class TT_TreeNode <T extends Comparable<T>> {
     private TT_TreeNode<T> leftSon;
     private TT_TreeNode<T> middleSon;
     private TT_TreeNode<T> rightSon;
-    private ArrayList<T> data;
+    private final ArrayList<T> data;
     private int nElements;
 
     public TT_TreeNode() {
@@ -70,5 +70,24 @@ public class TT_TreeNode <T extends Comparable<T>> {
 
     public void setMiddleSon(TT_TreeNode<T> middleSon) {
         this.middleSon = middleSon;
+    }
+
+    public boolean isLeaf() {
+        return this.rightSon == null && this.leftSon == null && this.middleSon == null;
+    }
+
+    public int getNSons() {
+        int nSons = 0;
+        if (this.leftSon != null) {
+            nSons++;
+        }
+        if (this.rightSon != null) {
+            nSons++;
+        }
+        if (this.middleSon != null) {
+            nSons++;
+        }
+
+        return nSons;
     }
 }
