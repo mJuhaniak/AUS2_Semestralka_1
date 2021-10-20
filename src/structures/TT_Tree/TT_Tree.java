@@ -30,7 +30,7 @@ public class TT_Tree <T extends Comparable<T>> {
                 nodeLetter.setNElements(2);
                 return true;
 
-            // Prípad keď nájdený list je 3-vrchol
+                // Prípad keď nájdený list je 3-vrchol
             } else {
                 while (true) {
                     TT_TreeNode<T> minNode = new TT_TreeNode<>();
@@ -40,82 +40,59 @@ public class TT_Tree <T extends Comparable<T>> {
                     // Rozdelenie 3-vrchola na vrcholy minNode a maxNode, stred môže byť potencionálne uložený do rodiča
                     if (nodeLetter.getData(0).compareTo(data) == 1) {
                         minNode.setData(0, data);
-                        minNode.setNElements(1);
                         maxNode.setData(0, nodeLetter.getData(1));
-                        maxNode.setNElements(1);
                         middleNode.setData(0, nodeLetter.getData(0));
-                        middleNode.setNElements(1);
                         coming = 1;
 
                     } else if (nodeLetter.getData(1).compareTo(data) == -1){
                         maxNode.setData(0, data);
-                        maxNode.setNElements(1);
                         minNode.setData(0, nodeLetter.getData(0));
-                        minNode.setNElements(1);
                         middleNode.setData(0, nodeLetter.getData(1));
-                        middleNode.setNElements(1);
                         coming = 2;
                     } else {
                         minNode.setData(0, nodeLetter.getData(0));
-                        minNode.setNElements(1);
                         maxNode.setData(0, nodeLetter.getData(1));
-                        maxNode.setNElements(1);
                         middleNode.setData(0, data);
-                        middleNode.setNElements(1);
                         coming = 0;
                     }
-                    minNode.setParent(nodeLetter.getParent());
-                    maxNode.setParent(nodeLetter.getParent());
+                    minNode.setNElements(1);
+                    maxNode.setNElements(1);
+                    middleNode.setNElements(1);
 
-                    if (coming == 1) {
-                        maxNode.setLeftSon(nodeLetter.getLeftSon());
-                        maxNode.setRightSon(nodeLetter.getRightSon());
+                    // Zmeny referencií v prípade, že ide o interný 3-vrchol
+                    if (nodeLetter.getNElements() == 2 && !nodeLetter.isLeaf()) {
+                        minNode.setParent(nodeLetter.getParent());
+                        maxNode.setParent(nodeLetter.getParent());
 
-                        if (!nodeLetter.isLeaf()) {
-                            nodeLetter.getLeftSon().setParent(maxNode);
+                        if (coming == 1) {
+                            maxNode.setLeftSon(nodeLetter.getMiddleSon());
+                            maxNode.setRightSon(nodeLetter.getRightSon());
+                            nodeLetter.getMiddleSon().setParent(maxNode);
                             nodeLetter.getRightSon().setParent(maxNode);
-                        }
-
-                        if (dummyNode.getLeftSon() != null) {
                             dummyNode.getLeftSon().setParent(minNode);
                             dummyNode.getRightSon().setParent(minNode);
-                        }
+                            minNode.setLeftSon(dummyNode.getLeftSon());
+                            minNode.setRightSon(dummyNode.getRightSon());
 
-                        minNode.setLeftSon(dummyNode.getLeftSon());
-                        minNode.setRightSon(dummyNode.getRightSon());
-
-                    } else if (coming == 2) {
-                        minNode.setLeftSon(nodeLetter.getLeftSon());
-                        minNode.setRightSon(nodeLetter.getMiddleSon());
-
-                        if (!nodeLetter.isLeaf()) {
+                        } else if (coming == 2) {
+                            minNode.setLeftSon(nodeLetter.getLeftSon());
+                            minNode.setRightSon(nodeLetter.getMiddleSon());
                             nodeLetter.getLeftSon().setParent(minNode);
-                            nodeLetter.getRightSon().setParent(minNode);
-                        }
-
-                        if (dummyNode.getLeftSon() != null) {
+                            nodeLetter.getMiddleSon().setParent(minNode);
+                            maxNode.setLeftSon(dummyNode.getLeftSon());
+                            maxNode.setRightSon(dummyNode.getRightSon());
                             dummyNode.getLeftSon().setParent(maxNode);
                             dummyNode.getRightSon().setParent(maxNode);
-                        }
-
-                        maxNode.setLeftSon(dummyNode.getLeftSon());
-                        maxNode.setRightSon(dummyNode.getRightSon());
-
-                    } else {
-                        minNode.setLeftSon(nodeLetter.getLeftSon());
-                        maxNode.setRightSon(nodeLetter.getRightSon());
-
-                        if (!nodeLetter.isLeaf()) {
-                            nodeLetter.getLeftSon().setParent(maxNode);
+                        } else {
+                            minNode.setLeftSon(nodeLetter.getLeftSon());
+                            maxNode.setRightSon(nodeLetter.getRightSon());
+                            nodeLetter.getLeftSon().setParent(minNode);
                             nodeLetter.getRightSon().setParent(maxNode);
-                        }
-                        if (dummyNode.getLeftSon() != null) {
                             dummyNode.getLeftSon().setParent(minNode);
                             dummyNode.getRightSon().setParent(maxNode);
+                            minNode.setRightSon(dummyNode.getLeftSon());
+                            maxNode.setLeftSon(dummyNode.getRightSon());
                         }
-
-                        minNode.setRightSon(dummyNode.getLeftSon());
-                        maxNode.setLeftSon(dummyNode.getRightSon());
                     }
 
                     // Prípad keď nájdený list od ktorého vkladáme prvok má otca
@@ -126,17 +103,19 @@ public class TT_Tree <T extends Comparable<T>> {
                             if (nodeLetterParent.getData(0).compareTo(middleNode.getData(0)) == 1) {
                                 nodeLetterParent.setData(1, nodeLetterParent.getData(0));
                                 nodeLetterParent.setData(0, middleNode.getData(0));
-                                
+
                                 nodeLetterParent.setLeftSon(minNode);
                                 nodeLetterParent.setMiddleSon(maxNode);
 
                             } else {
                                 nodeLetterParent.setData(1, middleNode.getData(0));
-                                
+
                                 nodeLetterParent.setMiddleSon(minNode);
                                 nodeLetterParent.setRightSon(maxNode);
 
                             }
+                            minNode.setParent(nodeLetterParent);
+                            maxNode.setParent(nodeLetterParent);
                             nodeLetterParent.setNElements(2);
                             return true;
                         } else {
