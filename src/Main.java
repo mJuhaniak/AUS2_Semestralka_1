@@ -1,5 +1,4 @@
 import structures.TT_Tree.TT_Tree;
-
 import java.time.LocalDate;
 
 public class Main {
@@ -98,6 +97,9 @@ public class Main {
         t.insert(test10);
 
         t.delete(test7);
+        t.delete(test12);
+        t.delete(test22);
+
         if (t.find(test36) != null) {
             System.out.println("t");
         } else {

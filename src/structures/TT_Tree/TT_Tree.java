@@ -122,7 +122,6 @@ public class TT_Tree <T extends Comparable<T>> {
                             dummyNode.setLeftSon(minNode);
                             dummyNode.setRightSon(maxNode);
                             nodeLetter = nodeLetterParent;
-                            //middleNode.setParent(nodeLetterParent);
                             data = middleNode.getData(0);
                             continue;
                         }
@@ -217,7 +216,7 @@ public class TT_Tree <T extends Comparable<T>> {
 
             while (compareNode.getNElements() == 0) {
                 // Prípad keď v je prázdny koreň s jedným synom - prázdny node je vytlačený hore
-                if (compareNode == this.root && compareNode.getNSons() == 1) {
+                if (compareNode == this.root) {
                     this.root = compareNode.getLeftSon();
                     this.root.setParent(null);
                     return true;
@@ -288,12 +287,25 @@ public class TT_Tree <T extends Comparable<T>> {
                             brotherNode.setData(1, brotherNode.getData(0));
                             brotherNode.setData(0, newKey);
                         }
+                        parentNode.setData(0, parentNode.getData(1));
                         parentNode.setLeftSon(brotherNode);
 
                         if (parentNode.getNElements() == 1) {
+                            if (!compareNode.isLeaf()) {
+                                if (compareNode.getLeftSon().getData(0).compareTo(brotherNode.getRightSon().getData(0)) == 1) {
+                                    brotherNode.setMiddleSon(brotherNode.getRightSon());
+                                    brotherNode.setRightSon(compareNode.getLeftSon());
+                                } else {
+                                    brotherNode.setMiddleSon(brotherNode.getLeftSon());
+                                    brotherNode.setLeftSon(compareNode.getLeftSon());
+                                }
+                                compareNode.getLeftSon().setParent(brotherNode);
+                                parentNode.setLeftSon(brotherNode);
+                            }
                             parentNode.setData(0, null);
                             parentNode.setNElements(0);
                             compareNode = parentNode;
+                            brotherNode.setNElements(2);
                             continue;
                         }
                     }
